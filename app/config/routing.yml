@@ -1,0 +1,7 @@
+iron_web_api:
+    resource: "@IronWebAPIBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

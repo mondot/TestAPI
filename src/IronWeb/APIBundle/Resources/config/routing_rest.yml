@@ -1,4 +1,4 @@
 articles : 
   type: rest
-  resource:     "APIBundle:ArticlesRest"
+  resource:     "IronWebAPIBundle:ArticlesRest"
   name_prefix:  api_

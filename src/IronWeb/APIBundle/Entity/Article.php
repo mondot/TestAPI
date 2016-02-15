@@ -7,6 +7,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\VirtualProperty;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -39,6 +40,8 @@ class Article
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Expose
      */
     private $title;
@@ -58,14 +61,6 @@ class Article
      * @Expose
      */
     private $content;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="answers", type="string", length=255)
-     */
-    private $answers;
-
 
     /**
      * Get id
@@ -169,28 +164,6 @@ class Article
         return $this->content;
     }
 
-    /**
-     * Set answers
-     *
-     * @param string $answers
-     * @return Article
-     */
-    public function setAnswers($answers)
-    {
-        $this->answers = $answers;
-
-        return $this;
-    }
-
-    /**
-     * Get answers
-     *
-     * @return string 
-     */
-    public function getAnswers()
-    {
-        return $this->answers;
-    }
 
     /**
      * Get the formatted name to display (NAME Firstname or username)

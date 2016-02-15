@@ -1,0 +1,4 @@
+articles : 
+  type: rest
+  resource:     "APIBundle:ArticlesRest"
+  name_prefix:  api_

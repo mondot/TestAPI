@@ -5,3 +5,9 @@ iron_web_api:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+#REST 
+rest : 
+  type : rest 
+  resource : "routing_rest.yml"
+  prefix : /api

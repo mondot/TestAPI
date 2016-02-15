@@ -3,12 +3,17 @@
 namespace IronWeb\APIBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Article
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="IronWeb\APIBundle\Entity\ArticleRepository")
+ * @ExclusionPolicy("all")
  */
 class Article
 {
@@ -18,13 +23,15 @@ class Article
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
+     * @Expose
      */
     private $date;
 
@@ -32,13 +39,15 @@ class Article
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Expose
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="author", type="string", length=255)
+     * @ORM\Column(name="author", type="string", length=255, nullable=true)
+     * @Expose
      */
     private $author;
 
@@ -46,6 +55,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Expose
      */
     private $content;
 
@@ -181,4 +191,21 @@ class Article
     {
         return $this->answers;
     }
+
+    /**
+     * Get the formatted name to display (NAME Firstname or username)
+     * 
+     * @param $separator: the separator between name and firstname (default: ' ')
+     * @return String
+     * @VirtualProperty 
+     */
+    public function getUsedName($separator = ' '){
+        if($this->getDate()!=null && $this->getAuthor()!=null){
+            return ucfirst(strtolower($this->getAuthor())).$separator.strtoupper($this->getDate());
+        }
+        else{
+            return $this->getTitle();
+        }
+    }   
+  
 }

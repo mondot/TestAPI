@@ -8,8 +8,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ArticlesRestController extends Controller
 {
-  public function getArticleAction($name){
-    $article = $this->getDoctrine()->getRepository('APIBundle:Article')->findOneByName($name);
+  public function getArticleAction($title){
+    $article = $this->getDoctrine()->getRepository('IronWebAPIBundle:Article')->findOneByTitle($title);
     if(!is_object($article)){
       throw $this->createNotFoundException();
     }

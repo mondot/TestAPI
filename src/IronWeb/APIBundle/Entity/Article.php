@@ -76,7 +76,7 @@ class Article
      *@var string
      *
      * @ORM\OneToMany(targetEntity="IronWeb\APIBundle\Entity\ArticleAnswer", mappedBy="article")
-     * 
+     * @Expose
      */
     private $answers;
 
@@ -188,6 +188,7 @@ class Article
     public function __construct()
     {
         $this->rates = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \Datetime();
     }
 
@@ -240,4 +241,37 @@ class Article
     //     }
     // } 
 
+
+    /**
+     * Add answers
+     *
+     * @param \IronWeb\APIBundle\Entity\ArticleAnswer $answers
+     * @return Article
+     */
+    public function addAnswer(\IronWeb\APIBundle\Entity\ArticleAnswer $answers)
+    {
+        $this->answers[] = $answers;
+
+        return $this;
+    }
+
+    /**
+     * Remove answers
+     *
+     * @param \IronWeb\APIBundle\Entity\ArticleAnswer $answers
+     */
+    public function removeAnswer(\IronWeb\APIBundle\Entity\ArticleAnswer $answers)
+    {
+        $this->answers->removeElement($answers);
+    }
+
+    /**
+     * Get answers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
 }

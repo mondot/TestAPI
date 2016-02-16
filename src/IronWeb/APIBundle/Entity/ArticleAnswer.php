@@ -3,6 +3,8 @@
 namespace IronWeb\APIBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * ArticleAnswer
@@ -32,6 +34,7 @@ class ArticleAnswer
      * @var string
      *
      * @ORM\Column(name="author", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $author;
 
@@ -39,6 +42,7 @@ class ArticleAnswer
      * @var string
      *
      * @ORM\Column(name="content", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $content;
 
@@ -149,5 +153,13 @@ class ArticleAnswer
     public function getArticle()
     {
         return $this->article;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->date = new \Datetime();
     }
 }

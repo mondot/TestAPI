@@ -4,7 +4,10 @@ namespace IronWeb\APIBundle\Controller;
 
 use IronWeb\APIBundle\Entity\Article;
 use IronWeb\APIBundle\Entity\ArticleRate;
+use IronWeb\APIBundle\Entity\ArticleAnswer;
+
 use IronWeb\APIBundle\Form\ArticleType;
+use IronWeb\APIBundle\Form\ArticleAnswerType;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -108,5 +111,48 @@ class ArticlesRestController extends FOSRestController
 
       // created => 201
       return new View($articleRate, Response::HTTP_CREATED);
+    }
+
+  /**
+  * @Rest\View
+  */
+  public function putArticleAnswerAction($id,Request $request)
+    {
+
+      $em = $this->getDoctrine()->getManager();
+
+      $article = $em
+        ->getRepository('IronWebAPIBundle:Article')
+        ->find($id)
+      ;
+
+      if (null == $article) {
+        throw new NotFoundHttpException("The article with id ".$id." does not exist.");
+      }
+
+      $answer = new ArticleAnswer();
+      $answer->setArticle($article);
+
+      $form = $this->createForm(
+          new ArticleAnswerType(),
+          $answer,
+          array('method' => 'PUT')
+      );
+
+      $form->handleRequest($request);
+
+      if ($form->isValid()) {
+
+      $manager = $this->getDoctrine()->getManager();
+      $manager->persist($answer);
+      $manager->flush();
+
+      // created => 201
+      return new View($answer, Response::HTTP_CREATED);
+      }
+
+      return new View(
+              Response::HTTP_UNPROCESSABLE_ENTITY
+      );
     }
 }

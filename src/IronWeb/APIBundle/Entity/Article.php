@@ -58,6 +58,8 @@ class Article
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Expose
      */
     private $content;
@@ -66,7 +68,7 @@ class Article
      *@var integer
      *
      * @ORM\OneToMany(targetEntity="IronWeb\APIBundle\Entity\ArticleRate", mappedBy="article")
-     * @Expose
+     * 
      */
     private $rates;
 
@@ -178,6 +180,7 @@ class Article
     public function __construct()
     {
         $this->rates = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->date = new \Datetime();
     }
 
     /**

@@ -2,6 +2,3 @@ articles :
   type: rest
   resource:     "IronWebAPIBundle:ArticlesRest"
   name_prefix:  api_
-  requirements:
-      id: \d+
-      rate: \d

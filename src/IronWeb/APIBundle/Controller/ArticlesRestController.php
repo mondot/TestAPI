@@ -92,16 +92,15 @@ class ArticlesRestController extends FOSRestController
       $articleRate->setArticle($article);
       $articleRate->setRate($rate);
 
-      // $validator = $this->get('validator');
-      // $listErrors = $validator->Validate($articleRate);
+      $validator = $this->get('validator');
+      $listErrors = $validator->validate($articleRate);
 
-      // if ($listErrors==0) {
-      // 	$manager = $this->getDoctrine()->getManager();
-      // 	$manager->persist($articleRate);
-      // 	$manager->flush();
-      // }
-
-      // return new Response("Congratulations! the number of errors is $listErrors");
+      if (count($listErrors)>0) {
+      	return new View(
+              $listErrors,
+              Response::HTTP_UNPROCESSABLE_ENTITY
+           );
+      }
 
       $manager = $this->getDoctrine()->getManager();
       $manager->persist($articleRate);

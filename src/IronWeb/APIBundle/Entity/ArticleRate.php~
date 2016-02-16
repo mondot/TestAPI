@@ -72,27 +72,4 @@ class ArticleRate
     {
         return $this->rate;
     }
-
-    /**
-     * Set article
-     *
-     * @param \IronWeb\APIBundle\Entity\Article $article
-     * @return ArticleRate
-     */
-    public function setArticle(\IronWeb\APIBundle\Entity\Article $article)
-    {
-        $this->article = $article;
-
-        return $this;
-    }
-
-    /**
-     * Get article
-     *
-     * @return \IronWeb\APIBundle\Entity\Article 
-     */
-    public function getArticle()
-    {
-        return $this->article;
-    }
 }

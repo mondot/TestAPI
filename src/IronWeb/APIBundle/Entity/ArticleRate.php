@@ -34,7 +34,7 @@ class ArticleRate
     private $rate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="IronWeb\APIBundle\Entity\Article")
+     * @ORM\ManyToOne(targetEntity="IronWeb\APIBundle\Entity\Article", inversedBy="rates")
      * @ORM\JoinColumn(nullable=false)
      */
     private $article;

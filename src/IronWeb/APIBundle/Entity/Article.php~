@@ -66,7 +66,7 @@ class Article
      *@var integer
      *
      * @ORM\OneToMany(targetEntity="IronWeb\APIBundle\Entity\ArticleRate", mappedBy="article")
-     * @Expose
+     *
      */
     private $rates;
 
@@ -170,63 +170,23 @@ class Article
     public function getContent()
     {
         return $this->content;
-    } 
+    }
+
+
+    /**
+     * Get the formatted name to display (NAME Firstname or username)
+     * 
+     * @param $separator: the separator between name and firstname (default: ' ')
+     * @return String
+     * @VirtualProperty 
+     */
+    public function getUsedName($separator = ' '){
+        if($this->getDate()!=null && $this->getAuthor()!=null){
+            return ucfirst(strtolower($this->getAuthor())).$separator.strtoupper($this->getDate());
+        }
+        else{
+            return $this->getTitle();
+        }
+    }   
   
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->rates = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add rates
-     *
-     * @param \IronWeb\APIBundle\Entity\ArticleRate $rates
-     * @return Article
-     */
-    public function addRate(\IronWeb\APIBundle\Entity\ArticleRate $rates)
-    {
-        $this->rates[] = $rates;
-
-        return $this;
-    }
-
-    /**
-     * Remove rates
-     *
-     * @param \IronWeb\APIBundle\Entity\ArticleRate $rates
-     */
-    public function removeRate(\IronWeb\APIBundle\Entity\ArticleRate $rates)
-    {
-        $this->rates->removeElement($rates);
-    }
-
-    /**
-     * Get rates
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRates()
-    {
-        return $this->rates;
-    }
-
-    // /**
-    //  * Get the formatted name to display (NAME Firstname or username)
-    //  * 
-    //  * @param $separator: the separator between name and firstname (default: ' ')
-    //  * @return String
-    //  * @VirtualProperty 
-    //  */
-    // public function getUsedName($separator = ' '){
-    //     if($this->getDate()!=null && $this->getAuthor()!=null){
-    //         return ucfirst(strtolower($this->getAuthor())).$separator.strtoupper($this->getDate());
-    //     }
-    //     else{
-    //         return $this->getTitle();
-    //     }
-    // } 
-
 }

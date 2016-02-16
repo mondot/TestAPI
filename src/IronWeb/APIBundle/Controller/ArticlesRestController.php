@@ -7,6 +7,9 @@ use IronWeb\APIBundle\Entity\ArticleRate;
 use IronWeb\APIBundle\Form\ArticleType;
 
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +19,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticlesRestController extends FOSRestController
 {
+	/**
+  * @Rest\View
+  */
   public function getArticleAction(Article $article){
     return $article;
   }
@@ -36,28 +42,38 @@ class ArticlesRestController extends FOSRestController
       return $articles;
   }
 
+  /**
+  * @Rest\View
+  */
   public function postArticlesAction(Request $request)
     {
-        $article = new Article();
-        $form = $this->createForm(
-            new ArticleType(),
-            $article
-        );
+      $article = new Article();
+      $form = $this->createForm(
+          new ArticleType(),
+          $article
+      );
 
-        $form->handleRequest($request);
+      $form->handleRequest($request);
 
-        if ($form->isValid()) {
+      if ($form->isValid()) {
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($article);
-        $manager->flush();
+      $manager = $this->getDoctrine()->getManager();
+      $manager->persist($article);
+      $manager->flush();
 
-        // created => 200
-        return new Response("Congratulations!");
-        }
+      // created => 201
+      return new View($article, Response::HTTP_CREATED);
+      }
+
+      return new View(
+              Response::HTTP_UNPROCESSABLE_ENTITY
+      );
 
     }
 
+  /**
+  * @Rest\View
+  */
   public function putArticleRateAction($id,$rate)
     {
 
@@ -91,5 +107,7 @@ class ArticlesRestController extends FOSRestController
       $manager->persist($articleRate);
       $manager->flush();
 
+      // created => 201
+      return new View($articleRate, Response::HTTP_CREATED);
     }
 }

@@ -1,0 +1,153 @@
+<?php
+
+namespace IronWeb\APIBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ArticleAnswer
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="IronWeb\APIBundle\Entity\ArticleAnswerRepository")
+ */
+class ArticleAnswer
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="author", type="string", length=255)
+     */
+    private $author;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="string", length=255)
+     */
+    private $content;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="IronWeb\APIBundle\Entity\Article", inversedBy="answers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return ArticleAnswer
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     * @return ArticleAnswer
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return ArticleAnswer
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \IronWeb\APIBundle\Entity\Article $article
+     * @return ArticleAnswer
+     */
+    public function setArticle(\IronWeb\APIBundle\Entity\Article $article)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \IronWeb\APIBundle\Entity\Article 
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+}

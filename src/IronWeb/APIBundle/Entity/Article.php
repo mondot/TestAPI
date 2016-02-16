@@ -73,6 +73,14 @@ class Article
     private $rates;
 
     /**
+     *@var string
+     *
+     * @ORM\OneToMany(targetEntity="IronWeb\APIBundle\Entity\ArticleAnswer", mappedBy="article")
+     * 
+     */
+    private $answers;
+
+    /**
      * Get id
      *
      * @return integer 

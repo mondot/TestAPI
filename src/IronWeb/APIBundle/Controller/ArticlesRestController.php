@@ -5,13 +5,15 @@ namespace IronWeb\APIBundle\Controller;
 use IronWeb\APIBundle\Entity\Article;
 use IronWeb\APIBundle\Entity\ArticleRate;
 use IronWeb\APIBundle\Entity\ArticleAnswer;
-
 use IronWeb\APIBundle\Form\ArticleType;
 use IronWeb\APIBundle\Form\ArticleAnswerType;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
+
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +26,15 @@ class ArticlesRestController extends FOSRestController
 {
 	/**
   * @Rest\View
+  * @ApiDoc(
+  *   resource = true,
+  *   description = "Gets a Article for a given id",
+  *   output = "IronWeb\APIBundle\Entity\Article",
+  *   statusCodes = {
+  *     200 = "Returned when successful",
+  *     404 = "Returned when the page is not found"
+  *   }
+  * )
   */
   public function getArticleAction(Article $article){
     return $article;

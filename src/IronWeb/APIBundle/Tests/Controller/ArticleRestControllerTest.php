@@ -33,6 +33,32 @@ class ArticleRestControllerTest extends WebTestCase
         $this->assertTrue(isset($decoded['id']));
     }
 
+    public function testJsonPostArticleAction()
+    {
+        $this->client->request(
+            'POST',
+            '/api/articles.json',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            '{"title":"test JsonPostArticleAction","author":"Quentin","content":"This is a test with Iron Web"}'
+        );
+        $this->assertJsonResponse($this->client->getResponse(), 201, false);
+    }
+
+    public function testJsonPostArticleActionShouldReturn422WithBadParameters()
+    {
+        $this->client->request(
+            'POST',
+            '/api/articles.json',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+            '{"titles":"test JsonPostArticleAction","authors":"Quentin","contents":"This is a test with Iron Web"}'
+        );
+        $this->assertJsonResponse($this->client->getResponse(), 422, false);
+    }
+
     protected function assertJsonResponse(
             $response, 
             $statusCode = 200, 

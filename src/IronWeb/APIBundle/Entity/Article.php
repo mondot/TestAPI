@@ -31,7 +31,7 @@ class Article
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime", nullable=true)
+     * @ORM\Column(name="date", type="datetime")
      * @Expose
      */
     private $date;
@@ -49,7 +49,9 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="author", type="string", length=255, nullable=true)
+     * @ORM\Column(name="author", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Expose
      */
     private $author;

@@ -32,20 +32,33 @@ class ArticlesRestController extends FOSRestController
   *   output = "IronWeb\APIBundle\Entity\Article",
   *   statusCodes = {
   *     200 = "Returned when successful",
-  *     404 = "Returned when the page is not found"
+  *     404 = "Returned when the article is not found"
   *   }
   * )
+  * @param Request $request the request object
+  * @param int     $id      the page id
+  * 
+  * @return array
+  *
+  * @throws NotFoundHttpException when page not exist
   */
+
   public function getArticleAction(Article $article){
     return $article;
   }
 
   /**
-   * retrieve all articles
-   * TODO: add pagination
-   *
-   * @return Article[]
-   */
+  * @Rest\View
+  * @ApiDoc(
+  *   resource = true,
+  *   description = "Gets all the Articles",
+  *   output = "IronWeb\APIBundle\Entity\Article",
+  *   statusCodes = {
+  *     200 = "Returned when successful",
+  *     404 = "Returned when no articles"
+  *   }
+  * )
+  */
   public function getArticlesAction()
   {
       $articles = $this
@@ -58,6 +71,15 @@ class ArticlesRestController extends FOSRestController
 
   /**
   * @Rest\View
+  * @ApiDoc(
+  *   resource = true,
+  *   description = "Posts an article",
+  *   output = "IronWeb\APIBundle\Entity\Article",
+  *   statusCodes = {
+  *     201 = "Returned when successful",
+  *     422 = "Returned when unprocessable entity"
+  *   }
+  * )
   */
   public function postArticlesAction(Request $request)
     {
@@ -79,7 +101,10 @@ class ArticlesRestController extends FOSRestController
       return new View($article, Response::HTTP_CREATED);
       }
 
+      $validator = $this->get('validator');
+      $listErrors = $validator->validate($article);
       return new View(
+              $listErrors,
               Response::HTTP_UNPROCESSABLE_ENTITY
       );
 
@@ -87,6 +112,14 @@ class ArticlesRestController extends FOSRestController
 
   /**
   * @Rest\View
+  * @ApiDoc(
+  *   resource = true,
+  *   description = "Puts a rate to a given id article",
+  *   statusCodes = {
+  *     201 = "Returned when successful",
+  *     422 = "Returned when unprocessable entity"
+  *   }
+  * )
   */
   public function putArticleRateAction($id,$rate)
     {
@@ -126,6 +159,15 @@ class ArticlesRestController extends FOSRestController
 
   /**
   * @Rest\View
+  * @ApiDoc(
+  *   resource = true,
+  *   description = "Puts an answer to a given id article",
+  *   input = "IronWeb\APIBundle\Entity\ArticleAnswer",
+  *   statusCodes = {
+  *     201 = "Returned when successful",
+  *     422 = "Returned when unprocessable entity"
+  *   }
+  * )
   */
   public function putArticleAnswerAction($id,Request $request)
     {
@@ -162,7 +204,11 @@ class ArticlesRestController extends FOSRestController
       return new View($answer, Response::HTTP_CREATED);
       }
 
+      $validator = $this->get('validator');
+      $listErrors = $validator->validate($article);
+
       return new View(
+              $listErrors,
               Response::HTTP_UNPROCESSABLE_ENTITY
       );
     }

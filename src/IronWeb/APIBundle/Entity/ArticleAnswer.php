@@ -3,6 +3,9 @@
 namespace IronWeb\APIBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -11,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="IronWeb\APIBundle\Entity\ArticleAnswerRepository")
+ * @ExclusionPolicy("all")
  */
 class ArticleAnswer
 {
@@ -27,6 +31,7 @@ class ArticleAnswer
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Expose
      */
     private $date;
 
@@ -35,6 +40,8 @@ class ArticleAnswer
      *
      * @ORM\Column(name="author", type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Expose
      */
     private $author;
 
@@ -43,6 +50,8 @@ class ArticleAnswer
      *
      * @ORM\Column(name="content", type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Expose
      */
     private $content;
 

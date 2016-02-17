@@ -67,15 +67,16 @@ class Article
     private $content;
 
     /**
-     *@var integer
+     *@var array
      *
      * @ORM\OneToMany(targetEntity="IronWeb\APIBundle\Entity\ArticleRate", mappedBy="article")
-     * 
+     * @Expose 
+     *
      */
     private $rates;
 
     /**
-     *@var string
+     *@var array
      *
      * @ORM\OneToMany(targetEntity="IronWeb\APIBundle\Entity\ArticleAnswer", mappedBy="article")
      * @Expose

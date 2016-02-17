@@ -3,6 +3,9 @@
 namespace IronWeb\APIBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -10,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="IronWeb\APIBundle\Entity\ArticleRateRepository")
+ * @ExclusionPolicy("all")
  */
 class ArticleRate
 {
@@ -30,6 +34,7 @@ class ArticleRate
      *      min = 0,
      *      max = 5
      * )
+     * @Expose
      */
     private $rate;
 
